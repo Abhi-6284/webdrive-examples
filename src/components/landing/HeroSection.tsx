@@ -7,6 +7,7 @@ import { ThemeCustomizer } from "./ThemeCustomizer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
+import { LiveVisitorsBadge } from "@/components/common/LiveVisitorsBadge";
 import { Play, Copy, Check, ArrowRight, Sparkles, ShieldCheck, Zap } from "lucide-react";
 
 export function HeroSection() {
@@ -57,16 +58,19 @@ export function HeroSection() {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-primary/15 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 max-w-5xl text-center relative z-10">
-        {/* Version Badge */}
-        <Badge
-          variant="outline"
-          className="mb-6 px-3.5 py-1 text-xs font-medium gap-1.5 border-primary/30 bg-primary/5 backdrop-blur shadow-sm inline-flex items-center"
-        >
-          <Sparkles className="h-3.5 w-3.5 text-primary" />
-          <WebDriveVersionBadge variant="pill" />
-          <span className="text-muted-foreground">•</span>
-          <span className="text-primary font-semibold">AI Agent Skill Included</span>
-        </Badge>
+        {/* Version Badge & Real-Time Visitor Counter */}
+        <div className="mb-6 flex flex-wrap items-center justify-center gap-2.5">
+          <Badge
+            variant="outline"
+            className="px-3.5 py-1 text-xs font-medium gap-1.5 border-primary/30 bg-primary/5 backdrop-blur shadow-sm inline-flex items-center"
+          >
+            <Sparkles className="h-3.5 w-3.5 text-primary" />
+            <WebDriveVersionBadge variant="pill" />
+            <span className="text-muted-foreground">•</span>
+            <span className="text-primary font-semibold">AI Agent Skill Included</span>
+          </Badge>
+          <LiveVisitorsBadge variant="pill" />
+        </div>
 
         {/* Main Title */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12]">

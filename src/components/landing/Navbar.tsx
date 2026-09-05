@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
+import { LiveVisitorsBadge } from "@/components/common/LiveVisitorsBadge";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { Github, ExternalLink } from "lucide-react";
 
@@ -43,6 +44,8 @@ export function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-2.5">
+          <LiveVisitorsBadge variant="pill" className="hidden lg:inline-flex" />
+
           <a
             href="https://www.npmjs.com/package/webdrive"
             target="_blank"
