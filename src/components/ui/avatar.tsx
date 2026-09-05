@@ -7,8 +7,6 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function Avatar({ className, src, fallback = "U", ...props }: AvatarProps) {
-  const [error, setError] = React.useState(false);
-
   return (
     <div
       className={cn(
@@ -17,12 +15,11 @@ export function Avatar({ className, src, fallback = "U", ...props }: AvatarProps
       )}
       {...props}
     >
-      {src && !error ? (
+      {src ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={src}
           alt="Avatar"
-          onError={() => setError(true)}
           className="aspect-square h-full w-full object-cover"
         />
       ) : (

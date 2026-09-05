@@ -1,11 +1,9 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
-import { Github, Sparkles, ExternalLink } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
 
 export function Navbar() {
 

@@ -1,18 +1,9 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Bot, Sparkles, Copy, Check } from "lucide-react";
+import { CopySkillCommand } from "@/components/common/CopySkillCommand";
+import { Bot, Sparkles } from "lucide-react";
 
 export function AgentSkillSection() {
-  const [copied, setCopied] = useState(false);
-
-  const copySkillCmd = () => {
-    navigator.clipboard.writeText("npx webdrive install-skill");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <section className="py-20 border-t bg-gradient-to-b from-primary/5 via-transparent to-transparent">
@@ -37,14 +28,7 @@ export function AgentSkillSection() {
             </div>
 
             <div className="flex flex-col items-center gap-3 w-full md:w-auto">
-              <div
-                onClick={copySkillCmd}
-                className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-4 py-3 font-mono text-xs shadow-sm cursor-pointer hover:border-primary/50 transition-all w-full sm:w-auto"
-              >
-                <span className="text-primary font-bold">$</span>
-                <span className="text-foreground">npx webdrive install-skill</span>
-                {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4 text-muted-foreground" />}
-              </div>
+              <CopySkillCommand />
               <span className="text-[11px] text-muted-foreground text-center">
                 Or: <code>npx skills add Abhi-6284/webdrive</code>
               </span>

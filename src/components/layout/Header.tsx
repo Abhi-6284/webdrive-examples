@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { OnboardingTour } from "@/components/tour/OnboardingTour";
 import { Avatar } from "@/components/ui/avatar";
