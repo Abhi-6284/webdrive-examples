@@ -6,6 +6,7 @@ import { useWebDrive } from "@/hooks/useWebDrive";
 import { ThemeCustomizer } from "./ThemeCustomizer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
 import { Play, Copy, Check, ArrowRight, Sparkles, ShieldCheck, Zap } from "lucide-react";
 
 export function HeroSection() {
@@ -62,7 +63,7 @@ export function HeroSection() {
           className="mb-6 px-3.5 py-1 text-xs font-medium gap-1.5 border-primary/30 bg-primary/5 backdrop-blur shadow-sm inline-flex items-center"
         >
           <Sparkles className="h-3.5 w-3.5 text-primary" />
-          <span>v1.1.0 Live on NPM</span>
+          <WebDriveVersionBadge variant="pill" />
           <span className="text-muted-foreground">•</span>
           <span className="text-primary font-semibold">AI Agent Skill Included</span>
         </Badge>

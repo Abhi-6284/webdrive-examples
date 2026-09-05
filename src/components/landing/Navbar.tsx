@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
 import { Moon, Sun, Github, Sparkles, ExternalLink } from "lucide-react";
 
 export function Navbar() {
@@ -37,9 +38,7 @@ export function Navbar() {
           <span className="font-bold text-lg tracking-tight text-foreground">
             webdrive
           </span>
-          <span className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
-            v1.1.0
-          </span>
+          <WebDriveVersionBadge variant="tag" />
         </Link>
 
         {/* Navigation Anchors */}
@@ -71,8 +70,7 @@ export function Navbar() {
             className="hidden sm:inline-flex"
           >
             <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs font-mono">
-              <span className="font-bold text-red-500">npm</span>
-              <span>v1.1.0</span>
+              <WebDriveVersionBadge variant="npm" />
             </Button>
           </a>
 

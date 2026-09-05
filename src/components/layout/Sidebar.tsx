@@ -1,4 +1,5 @@
 import React from "react";
+import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
 import {
   LayoutDashboard,
   BarChart3,
@@ -34,9 +35,7 @@ export function Sidebar() {
           <span className="font-bold text-base tracking-tight text-foreground">
             WebDrive
           </span>
-          <span className="ml-1.5 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
-            v1.1.0
-          </span>
+          <WebDriveVersionBadge variant="tag" className="ml-1.5" />
         </div>
       </div>
 
