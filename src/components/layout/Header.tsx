@@ -1,33 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { OnboardingTour } from "@/components/tour/OnboardingTour";
 import { Avatar } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Moon, Sun, Search, Sparkles } from "lucide-react";
+import { ThemeToggle } from "@/components/common/ThemeToggle";
+import { Search } from "lucide-react";
 
 export function Header() {
-  const [isDark, setIsDark] = useState<boolean>(false);
-
-  useEffect(() => {
-    // Check initial dark mode preference
-    if (typeof window !== "undefined") {
-      const darkPref = document.documentElement.classList.contains("dark");
-      setIsDark(darkPref);
-    }
-  }, []);
-
-  const toggleDarkMode = () => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement;
-    if (root.classList.contains("dark")) {
-      root.classList.remove("dark");
-      setIsDark(false);
-    } else {
-      root.classList.add("dark");
-      setIsDark(true);
-    }
-  };
 
   return (
     <header
@@ -52,19 +31,7 @@ export function Header() {
         <OnboardingTour />
 
         {/* Dark Mode Toggle */}
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={toggleDarkMode}
-          title="Toggle Light / Dark Mode"
-          className="h-9 w-9 rounded-md"
-        >
-          {isDark ? (
-            <Sun className="h-4 w-4 text-amber-400" />
-          ) : (
-            <Moon className="h-4 w-4 text-slate-700" />
-          )}
-        </Button>
+        <ThemeToggle variant="outline" size="icon" className="h-9 w-9 rounded-md" />
 
         {/* Profile Menu Trigger */}
         <div

@@ -4,28 +4,10 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
-import { Moon, Sun, Github, Sparkles, ExternalLink } from "lucide-react";
+import { ThemeToggle } from "@/components/common/ThemeToggle";
+import { Github, Sparkles, ExternalLink } from "lucide-react";
 
 export function Navbar() {
-  const [isDark, setIsDark] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsDark(document.documentElement.classList.contains("dark"));
-    }
-  }, []);
-
-  const toggleDarkMode = () => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement;
-    if (root.classList.contains("dark")) {
-      root.classList.remove("dark");
-      setIsDark(false);
-    } else {
-      root.classList.add("dark");
-      setIsDark(true);
-    }
-  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-md transition-colors">
@@ -85,19 +67,7 @@ export function Navbar() {
             </Button>
           </a>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleDarkMode}
-            title="Toggle theme"
-            className="h-8 w-8 rounded-md"
-          >
-            {isDark ? (
-              <Sun className="h-4 w-4 text-amber-400" />
-            ) : (
-              <Moon className="h-4 w-4 text-slate-700" />
-            )}
-          </Button>
+          <ThemeToggle className="h-8 w-8 rounded-md" />
         </div>
       </div>
     </header>
