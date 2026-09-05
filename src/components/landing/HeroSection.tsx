@@ -69,7 +69,6 @@ export function HeroSection() {
             <span className="text-muted-foreground">•</span>
             <span className="text-primary font-semibold">AI Agent Skill Included</span>
           </Badge>
-          <LiveVisitorsBadge variant="pill" />
         </div>
 
         {/* Main Title */}
