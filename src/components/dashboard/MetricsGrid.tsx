@@ -58,7 +58,7 @@ export function MetricsGrid() {
                 {metric.value}
               </div>
               <div className="mt-1.5 flex items-center gap-1.5 text-xs">
-                <Badge variant="secondary" className="gap-0.5 px-1.5 py-0 text-emerald-600 bg-emerald-500/10 font-medium">
+                <Badge variant="secondary" className="gap-0.5 px-1.5 py-0 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-500/20 font-medium">
                   <ArrowUpRight className="h-3 w-3" />
                   {metric.change}
                 </Badge>

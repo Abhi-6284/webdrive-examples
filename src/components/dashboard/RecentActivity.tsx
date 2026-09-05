@@ -72,7 +72,7 @@ export function RecentActivity() {
             {activities.map((act) => (
               <div key={act.id} className="flex items-center justify-between py-3.5 first:pt-0 last:pb-0">
                 <div className="flex items-start gap-3">
-                  <div className="mt-0.5 rounded-full bg-emerald-500/10 p-1 text-emerald-600">
+                  <div className="mt-0.5 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 p-1 text-emerald-600 dark:text-emerald-400">
                     <CheckCircle2 className="h-4 w-4" />
                   </div>
                   <div>

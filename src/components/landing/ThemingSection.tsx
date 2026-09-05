@@ -18,6 +18,32 @@ export function ThemingSection() {
   const [selectedRadius, setSelectedRadius] = useState<string>("12px");
   const [copied, setCopied] = useState(false);
 
+  // Restore stored palette preference if present and listen for changes
+  React.useEffect(() => {
+    try {
+      const stored = localStorage.getItem("webdrive_palette");
+      if (stored) {
+        const found = THEME_PALETTES.find((p) => p.name === stored);
+        if (found) setSelectedTheme(found);
+      }
+    } catch {
+      // ignore
+    }
+
+    const handlePaletteChange = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail) {
+        const found = THEME_PALETTES.find((p) => p.name === customEvent.detail);
+        if (found) setSelectedTheme(found);
+      }
+    };
+
+    window.addEventListener("webdrive_palette_changed", handlePaletteChange);
+    return () => {
+      window.removeEventListener("webdrive_palette_changed", handlePaletteChange);
+    };
+  }, []);
+
   const handleThemeChange = (theme: ThemeOption) => {
     setSelectedTheme(theme);
     applyGlobalTheme(theme);
@@ -35,12 +61,14 @@ export function ThemingSection() {
     const code = `/* WebDrive + Brand Design Tokens */
 :root {
   --primary: ${selectedTheme.hsl};
+  --primary-foreground: 210 40% 98%;
   --radius: ${selectedRadius};
 
   /* WebDrive Theme Mapping */
   --webdrive-primary: hsl(var(--primary));
+  --webdrive-primary-foreground: hsl(var(--primary-foreground));
   --webdrive-background: hsl(var(--card));
-  --webdrive-foreground: hsl(var(--foreground));
+  --webdrive-foreground: hsl(var(--card-foreground));
   --webdrive-border: hsl(var(--border));
   --webdrive-radius: var(--radius);
 }`;
@@ -172,6 +200,9 @@ export function ThemingSection() {
 
   /* WebDrive Theme Mapping */
   --webdrive-primary: hsl(var(--primary));
+  --webdrive-background: hsl(var(--card));
+  --webdrive-foreground: hsl(var(--card-foreground));
+  --webdrive-border: hsl(var(--border));
   --webdrive-radius: var(--radius);
 }`}</code>
               </pre>

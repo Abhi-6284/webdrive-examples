@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { THEME_PALETTES, applyGlobalTheme } from "@/components/landing/ThemeCustomizer";
 
 export type Theme = "light" | "dark" | "system";
 
@@ -8,6 +9,21 @@ export function useTheme() {
   const [theme, setThemeState] = useState<Theme>("system");
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
   const [mounted, setMounted] = useState<boolean>(false);
+
+  // Helper to re-sync any user-selected palette when switching light/dark
+  const syncActivePalette = useCallback(() => {
+    try {
+      const stored = localStorage.getItem("webdrive_palette");
+      if (stored) {
+        const found = THEME_PALETTES.find((p) => p.name === stored);
+        if (found) {
+          applyGlobalTheme(found);
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
 
   // Apply theme class to <html> and update localStorage
   const applyTheme = useCallback((targetTheme: Theme) => {
@@ -21,9 +37,11 @@ export function useTheme() {
 
     if (isDark) {
       root.classList.add("dark");
+      root.setAttribute("data-theme", "dark");
       setResolvedTheme("dark");
     } else {
       root.classList.remove("dark");
+      root.setAttribute("data-theme", "light");
       setResolvedTheme("light");
     }
 
@@ -33,7 +51,8 @@ export function useTheme() {
       localStorage.setItem("theme", targetTheme);
     }
     setThemeState(targetTheme);
-  }, []);
+    syncActivePalette();
+  }, [syncActivePalette]);
 
   useEffect(() => {
     setMounted(true);
@@ -59,11 +78,14 @@ export function useTheme() {
     const root = document.documentElement;
     if (isDark) {
       root.classList.add("dark");
+      root.setAttribute("data-theme", "dark");
       setResolvedTheme("dark");
     } else {
       root.classList.remove("dark");
+      root.setAttribute("data-theme", "light");
       setResolvedTheme("light");
     }
+    syncActivePalette();
 
     // 3. Listen for real-time OS system theme changes
     const handleSystemChange = (e: MediaQueryListEvent) => {
@@ -73,11 +95,14 @@ export function useTheme() {
           // In system mode: dynamically follow OS theme
           if (e.matches) {
             root.classList.add("dark");
+            root.setAttribute("data-theme", "dark");
             setResolvedTheme("dark");
           } else {
             root.classList.remove("dark");
+            root.setAttribute("data-theme", "light");
             setResolvedTheme("light");
           }
+          syncActivePalette();
         }
       } catch {
         // ignore

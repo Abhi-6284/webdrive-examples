@@ -6,31 +6,88 @@ export interface ThemeOption {
   name: string;
   primary: string;
   hsl: string;
-  border: string;
+  darkHsl?: string;
+  darkPrimary?: string;
 }
 
 export const THEME_PALETTES: ThemeOption[] = [
-  { name: "Default Blue", primary: "#2563eb", hsl: "221.2 83.2% 53.3%", border: "#e2e8f0" },
-  { name: "Violet", primary: "#7c3aed", hsl: "262.1 83.3% 57.8%", border: "#e2e8f0" },
-  { name: "Emerald", primary: "#059669", hsl: "160 84% 39%", border: "#e2e8f0" },
-  { name: "Rose", primary: "#e11d48", hsl: "346.8 77.2% 49.8%", border: "#e2e8f0" },
-  { name: "Amber", primary: "#d97706", hsl: "37.7 92.1% 50.2%", border: "#e2e8f0" },
-  { name: "Shadcn Slate", primary: "#0f172a", hsl: "222.2 47.4% 11.2%", border: "#e2e8f0" },
+  { name: "Default Blue", primary: "#2563eb", hsl: "221.2 83.2% 53.3%" },
+  { name: "Violet", primary: "#7c3aed", hsl: "262.1 83.3% 57.8%" },
+  { name: "Emerald", primary: "#059669", hsl: "160 84% 39%" },
+  { name: "Rose", primary: "#e11d48", hsl: "346.8 77.2% 49.8%" },
+  { name: "Amber", primary: "#d97706", hsl: "37.7 92.1% 50.2%" },
+  {
+    name: "Shadcn Slate",
+    primary: "#0f172a",
+    hsl: "222.2 47.4% 11.2%",
+    darkHsl: "210 40% 98%",
+    darkPrimary: "#f8fafc",
+  },
 ];
 
 export function applyGlobalTheme(theme: ThemeOption) {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
+  const isDark =
+    root.classList.contains("dark") ||
+    root.getAttribute("data-theme") === "dark";
+
+  const hsl = isDark && theme.darkHsl ? theme.darkHsl : theme.hsl;
+  const fg = isDark && theme.darkHsl ? "222.2 47.4% 11.2%" : "210 40% 98%";
+
   // Dynamically update the website's Tailwind / shadcn primary tokens
-  root.style.setProperty("--primary", theme.hsl);
-  root.style.setProperty("--ring", theme.hsl);
-  // Dynamically update WebDrive's tour engine primary token
-  root.style.setProperty("--webdrive-primary", `hsl(${theme.hsl})`);
-  root.style.setProperty("--webdrive-border", theme.border);
+  root.style.setProperty("--primary", hsl);
+  root.style.setProperty("--ring", hsl);
+  root.style.setProperty("--primary-foreground", fg);
+
+  // Dynamically update WebDrive's tour engine primary tokens
+  root.style.setProperty("--webdrive-primary", `hsl(${hsl})`);
+  root.style.setProperty("--webdrive-primary-foreground", `hsl(${fg})`);
+
+  // Remove any legacy inline --webdrive-border so CSS hsl(var(--border)) handles it automatically
+  root.style.removeProperty("--webdrive-border");
+
+  try {
+    localStorage.setItem("webdrive_palette", theme.name);
+    window.dispatchEvent(
+      new CustomEvent("webdrive_palette_changed", { detail: theme.name })
+    );
+  } catch {
+    // ignore
+  }
 }
 
 export function ThemeCustomizer() {
   const [selected, setSelected] = useState<ThemeOption>(THEME_PALETTES[0]);
+
+  // Restore stored palette preference if present
+  React.useEffect(() => {
+    try {
+      const stored = localStorage.getItem("webdrive_palette");
+      if (stored) {
+        const found = THEME_PALETTES.find((p) => p.name === stored);
+        if (found) {
+          setSelected(found);
+          applyGlobalTheme(found);
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    const handlePaletteChange = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail) {
+        const found = THEME_PALETTES.find((p) => p.name === customEvent.detail);
+        if (found) setSelected(found);
+      }
+    };
+
+    window.addEventListener("webdrive_palette_changed", handlePaletteChange);
+    return () => {
+      window.removeEventListener("webdrive_palette_changed", handlePaletteChange);
+    };
+  }, []);
 
   const handleSelect = (theme: ThemeOption) => {
     setSelected(theme);
