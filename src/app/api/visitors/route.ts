@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
+// Strict visitor ID regex pattern (e.g. "v_abc123_xyz")
+const VISITOR_ID_REGEX = /^v_[a-z0-9_]{4,48}$/;
+
 // In-memory sliding session store attached to globalThis to persist across module reloads in Node.js
 interface SessionStore {
   sessions: Map<string, number>;
@@ -22,6 +25,45 @@ if (!globalThis.__webdrive_visitor_store) {
 
 const store = globalThis.__webdrive_visitor_store;
 const SESSION_TTL_MS = 45 * 1000; // 45 seconds sliding window
+const MAX_SESSIONS = 3000; // Memory exhaustion guard
+
+// Rate limiter: Max 40 requests per minute per IP to protect Upstash quota and server load
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_MAX = 40;
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  // Periodic cleanup if map grows
+  if (rateLimitMap.size > 2000) {
+    rateLimitMap.forEach((rec, key) => {
+      if (now > rec.resetTime) rateLimitMap.delete(key);
+    });
+  }
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+
+  if (record.count >= RATE_LIMIT_MAX) {
+    return true;
+  }
+
+  record.count += 1;
+  return false;
+}
+
+// Block cross-origin abuse and CSRF
+function isAllowedOrigin(request: Request): boolean {
+  const secFetchSite = request.headers.get("sec-fetch-site");
+  if (secFetchSite === "cross-site") {
+    return false;
+  }
+  return true;
+}
 
 function cleanExpiredSessions(now: number) {
   store.sessions.forEach((timestamp, id) => {
@@ -29,6 +71,17 @@ function cleanExpiredSessions(now: number) {
       store.sessions.delete(id);
     }
   });
+
+  // Memory guard: cap maximum stored sessions
+  if (store.sessions.size > MAX_SESSIONS) {
+    let evicted = 0;
+    store.sessions.forEach((_, key) => {
+      if (evicted < 500) {
+        store.sessions.delete(key);
+        evicted++;
+      }
+    });
+  }
 }
 
 const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL;
@@ -59,7 +112,7 @@ async function runUpstashPipeline(commands: any[][]) {
       return await res.json();
     }
   } catch {
-    // network timeout or auth issue, smoothly fall back
+    // network timeout or auth issue, smoothly fall back to in-memory
   }
   return null;
 }
@@ -73,7 +126,15 @@ function getCalculatedActiveCount(realActiveCount: number): number {
   return Math.max(1, baseline + realActiveCount);
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (isRateLimited(clientIp)) {
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
+  }
+
   const now = Date.now();
   let realActive = store.sessions.size;
   let totalVisits = store.totalVisits;
@@ -119,9 +180,32 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  // Prevent cross-origin CSRF/abuse
+  if (!isAllowedOrigin(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  // Rate limiting
+  const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (isRateLimited(clientIp)) {
+    return NextResponse.json(
+      { error: "Too many requests", active: getCalculatedActiveCount(store.sessions.size) },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
+  }
+
+  // Payload size limit (reject oversized bodies > 1KB)
+  const contentLength = parseInt(request.headers.get("content-length") || "0", 10);
+  if (contentLength > 1024) {
+    return NextResponse.json({ error: "Payload too large" }, { status: 413 });
+  }
+
   try {
     const body = await request.json().catch(() => ({}));
-    const visitorId = body.visitorId ? String(body.visitorId) : null;
+    const rawId = typeof body.visitorId === "string" ? body.visitorId.trim() : null;
+
+    // Strict input validation
+    const visitorId = rawId && VISITOR_ID_REGEX.test(rawId) ? rawId : null;
     const isNew = Boolean(body.isNew);
     const now = Date.now();
 
@@ -179,9 +263,14 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  if (!isAllowedOrigin(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   try {
     const body = await request.json().catch(() => ({}));
-    const visitorId = body.visitorId ? String(body.visitorId) : null;
+    const rawId = typeof body.visitorId === "string" ? body.visitorId.trim() : null;
+    const visitorId = rawId && VISITOR_ID_REGEX.test(rawId) ? rawId : null;
 
     if (visitorId) {
       if (UPSTASH_URL && UPSTASH_TOKEN) {
