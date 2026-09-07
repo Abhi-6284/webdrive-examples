@@ -14,6 +14,7 @@ export interface ExampleItem {
   targetSelector: string;
   codeTs: string;
   codeJs: string;
+  aiPrompt: string;
 }
 
 export const EXAMPLES_DATA: ExampleItem[] = [
@@ -64,6 +65,16 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Implement a multi-step animated product walkthrough using the 'webdrive' library in our project.
+
+Requirements:
+1. Install package: 'npm install webdrive' and import stylesheet 'webdrive/styles.css'.
+2. Initialize 'new WebDrive({ animate: true, showProgress: true, steps: [...] })'.
+3. 'animate: true' provides smooth SVG cutout morphing and popover sliding between targets.
+4. Target 3-4 key interactive elements in our component/page (e.g. primary CTA button, analytics card, navigation bar).
+5. Specify optimal 'position' ('top' | 'right' | 'bottom' | 'left') for each step to avoid edge collisions.
+6. In React/Next.js: mount in Client Component ('use client') and clean up on unmount with 'tour.destroy()'.
+7. Provide a button or help menu item to trigger 'tour.start()'.`,
   },
   {
     id: "static-tour",
@@ -105,6 +116,14 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Implement a static, instantaneous product tour using 'webdrive' with animations disabled.
+
+Requirements:
+1. Initialize WebDrive with 'animate: false'.
+2. Optional: check 'window.matchMedia("(prefers-reduced-motion: reduce)").matches' to conditionally set 'animate: false' for users with motion sensitivity.
+3. Steps should transition instantaneously with zero delay or cutout interpolation.
+4. Target key workflow components and provide clear title and instructions.
+5. In React/Next.js: initialize inside useEffect in a client component and destroy on unmount.`,
   },
   {
     id: "simple-highlight",
@@ -146,6 +165,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Implement a distraction-free spotlight highlight using 'webdrive' that dims the screen around an element without rendering any popover box.
+
+Requirements:
+1. Configure WebDrive with 'allowClose: true' and 'showButtons: false'.
+2. Set step options: 'element: "<TARGET_SELECTOR>"', 'padding: 12', 'showCloseButton: false', 'showNextButton: false'.
+3. Use case: draw instant user attention to an element (e.g. freshly created item, critical validation error, active upload container).
+4. Clicking anywhere on the backdrop overlay dismisses the spotlight automatically.`,
   },
   {
     id: "highlight-with-popover",
@@ -183,6 +209,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Implement a single-step feature announcement spotlight using 'webdrive'.
+
+Requirements:
+1. Create a single-step WebDrive instance highlighting a new feature button or widget.
+2. Provide 'title', 'description', and 'position' ('top' | 'bottom' | 'left' | 'right').
+3. Set 'doneButtonText: "Got It"' to provide a friendly dismissal button.
+4. Use case: Feature announcement modal or contextual onboarding badge.`,
   },
   {
     id: "popover-positioning",
@@ -240,6 +273,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Configure responsive, collision-aware popover placements using 'webdrive'.
+
+Requirements:
+1. Use 'position: "top" | "right" | "bottom" | "left"' and 'align: "start" | "center" | "end"'.
+2. Select appropriate placements based on target UI location (e.g. headers use 'bottom', sidebars use 'right', footers use 'top').
+3. WebDrive includes built-in viewport collision detection with automatic flip fallback when space is limited.
+4. Optional: configure 'offset' (pixels between popover and target) and 'padding' (cutout margin).`,
   },
   {
     id: "customizing-popover",
@@ -285,6 +325,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Customize the WebDrive popover UI labels and rich HTML content to match our product design.
+
+Requirements:
+1. Configure custom button text: 'nextButtonText', 'previousButtonText', 'doneButtonText', 'closeButtonText'.
+2. Inject rich HTML formatting in 'content' field (e.g. bold highlights, code tags, badge pills, or embedded icons).
+3. The popover automatically adopts design system styles and responsive layout.
+4. Ensure dark/light mode compatibility by using Tailwind or theme-aware CSS custom properties.`,
   },
   {
     id: "styling-overlay",
@@ -319,6 +366,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Customize the SVG cutout backdrop overlay color and opacity in 'webdrive'.
+
+Requirements:
+1. Set 'overlayColor' with brand-tinted RGBA (e.g. 'rgba(30, 27, 75, 0.85)' for deep indigo or dark slate).
+2. Set 'overlayOpacity' between 0.4 (subtle backdrop) and 0.9 (cinema focus).
+3. Alternatively, set CSS variable '--webdrive-overlay' in our globals.css.
+4. Use case: aligning tour backdrop with brand identity or high-contrast dark modes.`,
   },
   {
     id: "feature-hints",
@@ -359,6 +413,13 @@ function openFeatureHint() {
   });
   tour.start();
 }`,
+    aiPrompt: `Implement non-intrusive pulsating beacon hint dots on UI elements for on-demand discovery.
+
+Requirements:
+1. Render an animated radar pulse indicator (using Tailwind 'animate-ping' and a solid dot) positioned beside the feature target.
+2. Clicking the beacon dot triggers a single-step WebDrive walkthrough on that element.
+3. Once viewed or dismissed, store a flag in localStorage so the beacon dot stops pulsating for returning users.
+4. Use case: passive onboarding that respects user focus without modal interruptions.`,
   },
   {
     id: "async-tour",
@@ -400,6 +461,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Implement asynchronous step waiting in 'webdrive' for elements loaded via API fetch or dynamic rendering.
+
+Requirements:
+1. Configure 'missingElementBehavior: "wait"'.
+2. Set 'missingElementWaitTimeout: 5000' (timeout in ms).
+3. WebDrive uses MutationObserver to monitor the DOM and automatically attaches the spotlight as soon as the target node renders.
+4. Use case: tours involving opening modals, async data tables, tabs, or lazy-loaded widgets.`,
   },
   {
     id: "no-element",
@@ -439,6 +507,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Implement a centered welcome intro modal dialog step using 'webdrive' without highlighting a specific UI element.
+
+Requirements:
+1. Place an invisible zero-size anchor in the viewport center: '<div id="welcome-modal-anchor" className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 pointer-events-none" />'.
+2. Configure Step 1 targeting this anchor with 'padding: 0' and 'nextButtonText: "Start Walkthrough →"'.
+3. Subsequent steps highlight actual interactive components across the page.
+4. Use case: Welcoming new users before directing them into an onboarding flow.`,
   },
   {
     id: "prevent-closing",
@@ -475,6 +550,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Implement a strict, mandatory onboarding walkthrough using 'webdrive'.
+
+Requirements:
+1. Configure 'allowClose: false' and 'closeOnEscape: false'.
+2. Hides the 'X' close button and prevents dismissal via outside backdrop clicks or the ESC key.
+3. Users must complete all steps using the tour action buttons ('Next' / 'Done').
+4. Use case: Mandatory security compliance, workspace setup, or critical terms acceptance walkthrough.`,
   },
   {
     id: "confirm-on-exit",
@@ -518,6 +600,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Implement an exit confirmation prompt before allowing users to abandon an onboarding tour.
+
+Requirements:
+1. Intercept dismissal attempts via the 'onClose' callback option.
+2. Prompt user with a browser confirmation or application modal ('Are you sure you want to exit?').
+3. If the user cancels, resume the tour at the current step: 'tour.start(tour.getCurrentStepIndex())'.
+4. If confirmed, allow the tour to terminate cleanly.`,
   },
   {
     id: "interactive-tour",
@@ -575,6 +664,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Implement an action-driven interactive step in 'webdrive' that requires user action before advancing.
+
+Requirements:
+1. On the interactive step, set 'showNextButton: false' to hide the forward button until criteria is met.
+2. In 'onEnter', attach a DOM event listener (e.g. 'input', 'change', or 'click') to the interactive target.
+3. Once the user satisfies the condition (e.g. valid input text, toggle switched), call 'tour.next()' programmatically and clean up listeners.
+4. Use case: Hands-on tutorials where users must try a feature to learn it.`,
   },
   {
     id: "tour-progress",
@@ -606,6 +702,13 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Enable and customize step progression counters in 'webdrive'.
+
+Requirements:
+1. Configure 'showProgress: true' in WebDrive options.
+2. The popover header automatically renders 'Step X of Y'.
+3. Optional: provide 'renderProgress: (current, total) => "..."' to format custom percentages or progress pills.
+4. Use case: Clear progress visibility for multi-step onboarding journeys.`,
   },
   {
     id: "hooks-for-everything",
@@ -657,6 +760,14 @@ tour.start();`,
   ],
 });
 tour.start();`,
+    aiPrompt: `Integrate analytics telemetry and lifecycle hooks with 'webdrive'.
+
+Requirements:
+1. Hook into tour lifecycle callbacks: 'onStart', 'onStepChange: (step, index) => ...', 'onEnter', 'onLeave', 'onComplete', 'onClose'.
+2. Track user onboarding funnel in your analytics provider (e.g. PostHog, Segment, Mixpanel, Google Analytics):
+   analytics.track('tour_step_viewed', { index, title: step.title })
+3. Alternatively, listen via strongly-typed emitter: 'tour.on("stepChange", ({ step, index }) => ...)'.
+4. Ensure clean error handling and unsubscription on unmount.`,
   },
   {
     id: "multi-page-tour",
@@ -677,11 +788,16 @@ const tour = new WebDrive({
     {
       element: "#multipage-step-1",
       title: "Cross-Route Walkthrough",
-      description: "This tour tracks completion in localStorage. Once finished, it won't repeat automatically on reload.",
+      description: "This tour persists its state in localStorage. Once finished, it won't repeat automatically.",
       position: "bottom",
-      doneButtonText: "Got It",
+      doneButtonText: "Continue to Dashboard →",
     },
   ],
+  onComplete: () => {
+    // Navigate across routes and resume
+    localStorage.setItem("webdrive_multipage_active", "true");
+    window.location.href = "/dashboard?tour=multipage";
+  },
 });
 
 tour.start();`,
@@ -694,9 +810,22 @@ tour.start();`,
       title: "Multi-Page Tour",
       description: "Maintains completion in localStorage.",
       position: "bottom",
+      doneButtonText: "Next Page →",
     },
   ],
+  onComplete: () => {
+    localStorage.setItem("webdrive_multipage_active", "true");
+    window.location.href = "/dashboard?tour=multipage";
+  },
 });
 tour.start();`,
+    aiPrompt: `Implement a cross-route multi-page walkthrough in a SPA / Next.js application using 'webdrive'.
+
+Requirements:
+1. On Page 1: Configure Step 1 with a navigation CTA button ('doneButtonText: "Continue to Dashboard →"').
+2. In 'onComplete': store a flag 'localStorage.setItem("webdrive_multipage_active", "true")' and navigate to Route 2 ('router.push("/dashboard?tour=multipage")').
+3. On Page 2: In a client component (e.g. 'useEffect'), check for the flag or URL query parameter.
+4. If present, clear the flag and instantiate Page 2's WebDrive step highlighting the target elements on the new page.
+5. Set 'remember: true' with an 'id' so returning users are not prompted again once completed.`,
   },
 ];

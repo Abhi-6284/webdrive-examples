@@ -19,6 +19,7 @@ import {
   Activity,
   Layers,
   StopCircle,
+  Bot,
 } from "lucide-react";
 
 interface ExampleSectionProps {
@@ -40,7 +41,7 @@ export function ExampleSection({
   eventLogs = [],
   onClearLogs = () => {},
 }: ExampleSectionProps) {
-  const [tab, setTab] = useState<"ts" | "js">("ts");
+  const [tab, setTab] = useState<"ts" | "js" | "ai">("ts");
   const [copied, setCopied] = useState(false);
 
   // States for interactive sandbox previews
@@ -48,7 +49,12 @@ export function ExampleSection({
   const [asyncLoading, setAsyncLoading] = useState(false);
   const [interactiveVal, setInteractiveVal] = useState("");
 
-  const code = tab === "ts" ? example.codeTs : example.codeJs;
+  const code =
+    tab === "ts"
+      ? example.codeTs
+      : tab === "js"
+      ? example.codeJs
+      : example.aiPrompt;
 
   const copyCode = () => {
     navigator.clipboard.writeText(code);
@@ -602,6 +608,18 @@ export function ExampleSection({
               >
                 JavaScript
               </button>
+              <button
+                type="button"
+                onClick={() => setTab("ai")}
+                className={`px-3 py-1 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${
+                  tab === "ai"
+                    ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                    : "text-primary hover:bg-primary/10 font-semibold"
+                }`}
+              >
+                <Bot className="h-3.5 w-3.5" />
+                <span>AI Brain Prompt</span>
+              </button>
             </div>
 
             <Button
@@ -613,19 +631,27 @@ export function ExampleSection({
               {copied ? (
                 <>
                   <Check className="h-3.5 w-3.5 text-emerald-500" />
-                  <span className="text-emerald-500">Copied</span>
+                  <span className="text-emerald-500">{tab === "ai" ? "Prompt Copied!" : "Copied!"}</span>
                 </>
               ) : (
                 <>
                   <Copy className="h-3.5 w-3.5" />
-                  <span>Copy Code</span>
+                  <span>{tab === "ai" ? "Copy AI Prompt" : "Copy Code"}</span>
                 </>
               )}
             </Button>
           </div>
 
           <div className="p-4 max-h-[340px] overflow-y-auto bg-card/70 font-mono text-xs leading-relaxed text-foreground">
-            <pre className="whitespace-pre overflow-x-auto">
+            {tab === "ai" && (
+              <div className="mb-3 rounded-lg bg-primary/10 border border-primary/20 p-2.5 text-xs font-sans text-primary flex items-start gap-2">
+                <Sparkles className="h-4 w-4 shrink-0 mt-0.5" />
+                <div className="leading-snug">
+                  <strong>AI Brain Instruction:</strong> Copy and paste this prompt into Cursor, Claude, Copilot, ChatGPT, or Antigravity. The AI will learn the exact WebDrive implementation rules and build this pattern tailored directly to your project&apos;s UI structure.
+                </div>
+              </div>
+            )}
+            <pre className="whitespace-pre-wrap overflow-x-auto">
               <code>{code}</code>
             </pre>
           </div>
