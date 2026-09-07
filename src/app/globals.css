@@ -93,3 +93,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* WebDrive: Hide popover completely when a step has no title, description, or buttons (Simple Highlight) */
+.webdrive-popover:has(.webdrive-content:empty):has(.webdrive-header[style*="none"]):has(.webdrive-footer[style*="none"]),
+.webdrive-popover[data-webdrive-hidden="true"],
+.webdrive-popover.webdrive-hidden {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

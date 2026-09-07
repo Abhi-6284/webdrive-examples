@@ -140,6 +140,7 @@ import "webdrive/styles.css";
 const tour = new WebDrive({
   allowClose: true,
   showButtons: false,
+  showProgress: false,
   steps: [
     {
       element: "#simple-highlight-target",
@@ -147,6 +148,11 @@ const tour = new WebDrive({
       showCloseButton: false,
       showNextButton: false,
       showPreviousButton: false,
+      onEnter: () => {
+        // Hide popover container completely for pure element spotlight
+        const popover = document.querySelector(".webdrive-popover") as HTMLElement | null;
+        if (popover) popover.style.display = "none";
+      },
     },
   ],
 });
@@ -155,12 +161,17 @@ tour.start();`,
     codeJs: `const tour = new WebDrive({
   allowClose: true,
   showButtons: false,
+  showProgress: false,
   steps: [
     {
       element: "#simple-highlight-target",
       padding: 12,
       showCloseButton: false,
       showNextButton: false,
+      onEnter: () => {
+        const popover = document.querySelector(".webdrive-popover");
+        if (popover) popover.style.display = "none";
+      },
     },
   ],
 });
@@ -168,10 +179,12 @@ tour.start();`,
     aiPrompt: `Implement a distraction-free spotlight highlight using 'webdrive' that dims the screen around an element without rendering any popover box.
 
 Requirements:
-1. Configure WebDrive with 'allowClose: true' and 'showButtons: false'.
+1. Configure WebDrive with 'allowClose: true', 'showButtons: false', and 'showProgress: false'.
 2. Set step options: 'element: "<TARGET_SELECTOR>"', 'padding: 12', 'showCloseButton: false', 'showNextButton: false'.
-3. Use case: draw instant user attention to an element (e.g. freshly created item, critical validation error, active upload container).
-4. Clicking anywhere on the backdrop overlay dismisses the spotlight automatically.`,
+3. Hide the empty popover container inside 'onEnter':
+   onEnter: () => { const el = document.querySelector(".webdrive-popover"); if (el) el.style.display = "none"; }
+4. Clicking anywhere on the darkened backdrop dismisses the spotlight.
+5. Use case: Draw instant focus to an element without popup interruptions.`,
   },
   {
     id: "highlight-with-popover",

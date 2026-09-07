@@ -127,6 +127,7 @@ export function ExamplesClient() {
         tour = new WebDrive({
           allowClose: true,
           showButtons: false,
+          showProgress: false,
           onClose: () => handleEnd("closed"),
           onComplete: () => handleEnd("completed"),
           steps: [
@@ -136,6 +137,12 @@ export function ExamplesClient() {
               showCloseButton: false,
               showNextButton: false,
               showPreviousButton: false,
+              onEnter: () => {
+                const popover = document.querySelector(".webdrive-popover") as HTMLElement | null;
+                if (popover) {
+                  popover.style.setProperty("display", "none", "important");
+                }
+              },
             },
           ],
         });
