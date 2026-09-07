@@ -30,6 +30,7 @@ interface ExampleSectionProps {
   isRunning: boolean;
   eventLogs?: LogEntry[];
   onClearLogs?: () => void;
+  isHighlighted?: boolean;
 }
 
 export function ExampleSection({
@@ -40,6 +41,7 @@ export function ExampleSection({
   isRunning,
   eventLogs = [],
   onClearLogs = () => {},
+  isHighlighted = false,
 }: ExampleSectionProps) {
   const [tab, setTab] = useState<"ts" | "js" | "ai">("ts");
   const [copied, setCopied] = useState(false);
@@ -504,7 +506,11 @@ export function ExampleSection({
   return (
     <section
       id={example.id}
-      className="scroll-mt-28 rounded-2xl border border-border bg-card p-6 md:p-8 shadow-sm transition-all hover:border-primary/40 space-y-6"
+      className={`scroll-mt-36 rounded-2xl border bg-card p-6 md:p-8 shadow-sm transition-all duration-300 ease-out space-y-6 ${
+        isHighlighted
+          ? "border-primary ring-2 ring-primary ring-offset-4 ring-offset-background shadow-xl scale-[1.005]"
+          : "border-border hover:border-primary/40"
+      }`}
     >
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/60 pb-5">

@@ -13,6 +13,7 @@ export function ExamplesClient() {
   const [isRunning, setIsRunning] = useState(false);
   const [runningExampleId, setRunningExampleId] = useState<string | null>(null);
   const [eventLogs, setEventLogs] = useState<LogEntry[]>([]);
+  const [highlightedSectionId, setHighlightedSectionId] = useState<string | null>(null);
 
   const activeTourRef = useRef<WebDrive | null>(null);
 
@@ -521,10 +522,33 @@ export function ExamplesClient() {
   ];
 
   const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    // 1. If the target example is filtered out by category or search query, reset them so it's in the DOM
+    const targetExample = EXAMPLES_DATA.find((e) => e.id === id);
+    if (targetExample) {
+      if (activeCategory !== "all" && targetExample.category !== activeCategory) {
+        setActiveCategory("all");
+      }
+      if (searchQuery.trim() !== "") {
+        setSearchQuery("");
+      }
     }
+
+    // 2. Wait for React to render the element into the DOM if filters were reset
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        // Offset for dual sticky headers: Navbar (64px) + Filter bar (72px) + breathing padding
+        const yOffset = -145;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+
+        // Highlight jumped section with visual feedback
+        setHighlightedSectionId(id);
+        setTimeout(() => {
+          setHighlightedSectionId(null);
+        }, 2200);
+      }
+    }, 70);
   };
 
   return (
@@ -561,14 +585,17 @@ export function ExamplesClient() {
 
           {/* Quick Jump & Search Row */}
           <div className="flex items-center gap-2.5">
-            {/* Quick Jump Dropdown */}
+            {/* Quick Jump Dropdown (controlled so it can jump repeatedly) */}
             <div className="relative">
               <select
+                value=""
                 onChange={(e) => {
-                  if (e.target.value) scrollToSection(e.target.value);
+                  const targetId = e.target.value;
+                  if (targetId) {
+                    scrollToSection(targetId);
+                  }
                 }}
-                defaultValue=""
-                className="h-9 rounded-lg border border-input bg-card px-3 pr-8 text-xs font-medium text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer appearance-none"
+                className="h-9 rounded-lg border border-input bg-card px-3 pr-8 text-xs font-medium text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer appearance-none transition-all hover:border-primary/50 shadow-xs"
               >
                 <option value="" disabled>
                   Jump to Section...
@@ -648,6 +675,7 @@ export function ExamplesClient() {
                 isRunning={runningExampleId === example.id}
                 eventLogs={eventLogs}
                 onClearLogs={clearLogs}
+                isHighlighted={highlightedSectionId === example.id}
               />
             );
           })
