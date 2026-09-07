@@ -11,7 +11,7 @@ export interface ExampleItem {
   category: "core" | "positioning" | "flow" | "lifecycle";
   badge: string;
   description: string;
-  driverJsRef?: string;
+  targetSelector: string;
   codeTs: string;
   codeJs: string;
 }
@@ -24,7 +24,7 @@ export const EXAMPLES_DATA: ExampleItem[] = [
     badge: "Most Popular",
     description:
       "Smooth SVG cutout morphing and gliding popover animations as the tour moves from one element to the next.",
-    driverJsRef: "https://driverjs.com/docs/animated-tour",
+    targetSelector: "#animated-step-1, #animated-step-2, #animated-step-3",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -33,19 +33,19 @@ const tour = new WebDrive({
   showProgress: true,
   steps: [
     {
-      element: "#playground-primary-btn",
+      element: "#animated-step-1",
       title: "Action Button",
       description: "Notice the smooth animated transition into this primary button.",
       position: "bottom",
     },
     {
-      element: "#playground-analytics-card",
+      element: "#animated-step-2",
       title: "Analytics Widget",
       description: "The cutout mask smoothly morphs its dimensions to fit this card.",
       position: "left",
     },
     {
-      element: "#playground-search-input",
+      element: "#animated-step-3",
       title: "Search Bar",
       description: "Transitions seamlessly across the viewport with zero layout shift.",
       position: "bottom",
@@ -58,9 +58,9 @@ tour.start();`,
   animate: true,
   showProgress: true,
   steps: [
-    { element: "#playground-primary-btn", title: "Action Button", description: "Smooth animation.", position: "bottom" },
-    { element: "#playground-analytics-card", title: "Analytics Widget", description: "Cutout morphs size.", position: "left" },
-    { element: "#playground-search-input", title: "Search Bar", description: "Zero layout shift.", position: "bottom" },
+    { element: "#animated-step-1", title: "Action Button", description: "Smooth animation.", position: "bottom" },
+    { element: "#animated-step-2", title: "Analytics Widget", description: "Cutout morphs size.", position: "left" },
+    { element: "#animated-step-3", title: "Search Bar", description: "Zero layout shift.", position: "bottom" },
   ],
 });
 tour.start();`,
@@ -72,7 +72,7 @@ tour.start();`,
     badge: "Accessibility",
     description:
       "Instantaneous step transitions with zero animation delay. Perfect for users with prefers-reduced-motion or high-performance requirements.",
-    driverJsRef: "https://driverjs.com/docs/static-tour",
+    targetSelector: "#static-step-1, #static-step-2",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -81,14 +81,14 @@ const tour = new WebDrive({
   showProgress: true,
   steps: [
     {
-      element: "#playground-search-input",
-      title: "Instant Snap",
+      element: "#static-step-1",
+      title: "Instant Snap Button",
       description: "Switches steps with zero animation latency.",
       position: "bottom",
     },
     {
-      element: "#playground-primary-btn",
-      title: "Direct Focus",
+      element: "#static-step-2",
+      title: "Direct Focus Badge",
       description: "Ideal for automated testing and users with motion sensitivity.",
       position: "bottom",
     },
@@ -100,8 +100,8 @@ tour.start();`,
   animate: false,
   showProgress: true,
   steps: [
-    { element: "#playground-search-input", title: "Instant Snap", description: "Zero animation latency.", position: "bottom" },
-    { element: "#playground-primary-btn", title: "Direct Focus", description: "High-performance snapping.", position: "bottom" },
+    { element: "#static-step-1", title: "Instant Snap", description: "Zero animation latency.", position: "bottom" },
+    { element: "#static-step-2", title: "Direct Focus", description: "High-performance snapping.", position: "bottom" },
   ],
 });
 tour.start();`,
@@ -113,7 +113,7 @@ tour.start();`,
     badge: "Focus Spotlight",
     description:
       "Spotlights an element with the darkened SVG cutout overlay without rendering any popover card. Clicking the backdrop dismisses it.",
-    driverJsRef: "https://driverjs.com/docs/simple-highlight",
+    targetSelector: "#simple-highlight-target",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -123,7 +123,7 @@ const tour = new WebDrive({
   showButtons: false,
   steps: [
     {
-      element: "#playground-primary-btn",
+      element: "#simple-highlight-target",
       padding: 12,
       showCloseButton: false,
       showNextButton: false,
@@ -138,7 +138,7 @@ tour.start();`,
   showButtons: false,
   steps: [
     {
-      element: "#playground-primary-btn",
+      element: "#simple-highlight-target",
       padding: 12,
       showCloseButton: false,
       showNextButton: false,
@@ -154,14 +154,14 @@ tour.start();`,
     badge: "Essential",
     description:
       "A classic single-element highlight with title, description, and an action button to dismiss.",
-    driverJsRef: "https://driverjs.com/docs/simple-highlight",
+    targetSelector: "#highlight-popover-target",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
 const tour = new WebDrive({
   steps: [
     {
-      element: "#playground-primary-btn",
+      element: "#highlight-popover-target",
       title: "Quick Feature Spotlight",
       description: "Focus on this critical action button before exploring the rest of the app.",
       position: "bottom",
@@ -174,7 +174,7 @@ tour.start();`,
     codeJs: `const tour = new WebDrive({
   steps: [
     {
-      element: "#playground-primary-btn",
+      element: "#highlight-popover-target",
       title: "Quick Feature Spotlight",
       description: "Focus on this critical action button.",
       position: "bottom",
@@ -191,7 +191,7 @@ tour.start();`,
     badge: "Smart Engine",
     description:
       "Position popovers on top, bottom, left, or right, aligned to start, center, or end. WebDrive automatically flips sides when near viewport boundaries.",
-    driverJsRef: "https://driverjs.com/docs/popover-position",
+    targetSelector: "#pos-target-top, #pos-target-right, #pos-target-bottom, #pos-target-left",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -199,28 +199,28 @@ const tour = new WebDrive({
   animate: true,
   steps: [
     {
-      element: "#playground-positioning-target",
+      element: "#pos-target-top",
       title: "Top Placement",
       description: "Positioned above with a directional arrow pointing down.",
       position: "top",
       align: "center",
     },
     {
-      element: "#playground-positioning-target",
+      element: "#pos-target-right",
       title: "Right Placement",
       description: "Positioned to the right of the target element.",
       position: "right",
       align: "center",
     },
     {
-      element: "#playground-positioning-target",
+      element: "#pos-target-bottom",
       title: "Bottom Placement",
       description: "Positioned beneath the element.",
       position: "bottom",
       align: "center",
     },
     {
-      element: "#playground-positioning-target",
+      element: "#pos-target-left",
       title: "Left Placement",
       description: "Positioned to the left with auto-flipping if space is constrained.",
       position: "left",
@@ -233,10 +233,10 @@ tour.start();`,
     codeJs: `const tour = new WebDrive({
   animate: true,
   steps: [
-    { element: "#playground-positioning-target", title: "Top", position: "top", align: "center" },
-    { element: "#playground-positioning-target", title: "Right", position: "right", align: "center" },
-    { element: "#playground-positioning-target", title: "Bottom", position: "bottom", align: "center" },
-    { element: "#playground-positioning-target", title: "Left", position: "left", align: "center" },
+    { element: "#pos-target-top", title: "Top", position: "top", align: "center" },
+    { element: "#pos-target-right", title: "Right", position: "right", align: "center" },
+    { element: "#pos-target-bottom", title: "Bottom", position: "bottom", align: "center" },
+    { element: "#pos-target-left", title: "Left", position: "left", align: "center" },
   ],
 });
 tour.start();`,
@@ -248,7 +248,7 @@ tour.start();`,
     badge: "Branding",
     description:
       "Customize button copy (nextButtonText, previousButtonText, doneButtonText) and inject rich HTML content into popovers.",
-    driverJsRef: "https://driverjs.com/docs/styling-popover",
+    targetSelector: "#custom-popover-target",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -259,7 +259,7 @@ const tour = new WebDrive({
   closeButtonText: "Dismiss",
   steps: [
     {
-      element: "#playground-custom-card",
+      element: "#custom-popover-target",
       title: "✨ Branded Popover",
       content: \`<div style="font-size: 13px; line-height: 1.6;">
         <p>You can render <strong>bold text</strong>, <code>code tags</code>, and custom HTML inside step content.</p>
@@ -277,7 +277,7 @@ tour.start();`,
   doneButtonText: "Complete Setup 🚀",
   steps: [
     {
-      element: "#playground-custom-card",
+      element: "#custom-popover-target",
       title: "✨ Branded Popover",
       content: "<div>HTML content with <strong>bold</strong> tags.</div>",
       position: "bottom",
@@ -293,7 +293,7 @@ tour.start();`,
     badge: "Theming",
     description:
       "Override the backdrop overlay color and opacity to match brand aesthetics or create high-contrast dark rooms.",
-    driverJsRef: "https://driverjs.com/docs/styling-overlay",
+    targetSelector: "#styling-overlay-target",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -302,7 +302,7 @@ const tour = new WebDrive({
   overlayOpacity: 0.85,
   steps: [
     {
-      element: "#playground-analytics-card",
+      element: "#styling-overlay-target",
       title: "Indigo Ambient Backdrop",
       description: "The overlay color and opacity can be set via options or CSS custom properties (--webdrive-overlay).",
       position: "bottom",
@@ -315,7 +315,7 @@ tour.start();`,
   overlayColor: "rgba(30, 27, 75, 0.85)",
   overlayOpacity: 0.85,
   steps: [
-    { element: "#playground-analytics-card", title: "Indigo Backdrop", position: "bottom" },
+    { element: "#styling-overlay-target", title: "Indigo Backdrop", position: "bottom" },
   ],
 });
 tour.start();`,
@@ -327,7 +327,7 @@ tour.start();`,
     badge: "Self-Serve",
     description:
       "Non-intrusive pulsating beacon radar dots attached to UI elements that invite users to trigger feature spotlights on demand.",
-    driverJsRef: "https://driverjs.com/docs/hints",
+    targetSelector: "#feature-hint-target",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -336,7 +336,7 @@ function openFeatureHint() {
   const tour = new WebDrive({
     steps: [
       {
-        element: "#playground-beacon-target",
+        element: "#feature-hint-target",
         title: "💡 Interactive Feature Hint",
         description: "Beacon dots allow users to discover features at their own pace without interrupting their flow.",
         position: "top",
@@ -350,7 +350,7 @@ function openFeatureHint() {
   const tour = new WebDrive({
     steps: [
       {
-        element: "#playground-beacon-target",
+        element: "#feature-hint-target",
         title: "💡 Feature Hint",
         description: "Discovered on user demand.",
         position: "top",
@@ -367,7 +367,7 @@ function openFeatureHint() {
     badge: "SSR Safe",
     description:
       "Automatically waits for elements that load asynchronously via fetch or client-side rendering with missingElementBehavior: 'wait'.",
-    driverJsRef: "https://driverjs.com/docs/async-tour",
+    targetSelector: "#async-tour-container, #async-tour-dynamic-element",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -376,13 +376,13 @@ const tour = new WebDrive({
   missingElementWaitTimeout: 5000,
   steps: [
     {
-      element: "#playground-async-container",
+      element: "#async-tour-container",
       title: "Step 1: Container",
       description: "Click Next to simulate an asynchronous API call that renders a new element.",
       position: "bottom",
     },
     {
-      element: "#playground-dynamic-async-widget",
+      element: "#async-tour-dynamic-element",
       title: "Step 2: Async Widget Loaded!",
       description: "WebDrive automatically detected and attached to this element when it mounted into the DOM.",
       position: "top",
@@ -395,8 +395,8 @@ tour.start();`,
   missingElementBehavior: "wait",
   missingElementWaitTimeout: 5000,
   steps: [
-    { element: "#playground-async-container", title: "Step 1", position: "bottom" },
-    { element: "#playground-dynamic-async-widget", title: "Step 2: Mounted Async", position: "top" },
+    { element: "#async-tour-container", title: "Step 1", position: "bottom" },
+    { element: "#async-tour-dynamic-element", title: "Step 2: Mounted Async", position: "top" },
   ],
 });
 tour.start();`,
@@ -408,7 +408,7 @@ tour.start();`,
     badge: "Intro Dialog",
     description:
       "Renders a centered dialog modal in the viewport before highlighting specific elements — ideal for welcome introductions and completion messages.",
-    driverJsRef: "https://driverjs.com/docs/modal",
+    targetSelector: "#centered-modal-anchor",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -420,14 +420,8 @@ const tour = new WebDrive({
       title: "👋 Welcome to WebDrive Showcase",
       description: "This initial step has no target element cutout — it serves as a welcome modal dialog before starting the walkthrough.",
       position: "bottom",
-      nextButtonText: "Start Walkthrough →",
+      nextButtonText: "Got It →",
       padding: 0,
-    },
-    {
-      element: "#playground-primary-btn",
-      title: "Target Highlighting",
-      description: "Now we transition smoothly to highlighting specific UI components.",
-      position: "bottom",
     },
   ],
 });
@@ -440,9 +434,8 @@ tour.start();`,
       title: "👋 Welcome",
       description: "Centered welcome dialog without target cutout.",
       position: "bottom",
-      nextButtonText: "Start →",
+      nextButtonText: "Got It →",
     },
-    { element: "#playground-primary-btn", title: "Step 2", position: "bottom" },
   ],
 });
 tour.start();`,
@@ -454,7 +447,7 @@ tour.start();`,
     badge: "Required Tour",
     description:
       "Disables close buttons, backdrop clicks, and the Escape key. Users are required to progress through the steps to complete mandatory onboarding.",
-    driverJsRef: "https://driverjs.com/docs/prevent-destroy",
+    targetSelector: "#prevent-closing-target",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -464,15 +457,9 @@ const tour = new WebDrive({
   keyboardNavigation: true,
   steps: [
     {
-      element: "#playground-primary-btn",
-      title: "Mandatory Step 1 of 2",
-      description: "You cannot click outside or press Escape to dismiss this tour. Click Next to proceed.",
-      position: "bottom",
-    },
-    {
-      element: "#playground-search-input",
-      title: "Mandatory Step 2 of 2",
-      description: "Clicking Done finishes the mandatory workflow.",
+      element: "#prevent-closing-target",
+      title: "Mandatory Step Flow",
+      description: "You cannot click outside or press Escape to dismiss this tour. Click Done to proceed.",
       position: "bottom",
       doneButtonText: "Complete & Close",
     },
@@ -484,8 +471,7 @@ tour.start();`,
   allowClose: false,
   closeOnEscape: false,
   steps: [
-    { element: "#playground-primary-btn", title: "Step 1: Required", position: "bottom" },
-    { element: "#playground-search-input", title: "Step 2: Required", position: "bottom" },
+    { element: "#prevent-closing-target", title: "Mandatory Step", position: "bottom", doneButtonText: "Complete" },
   ],
 });
 tour.start();`,
@@ -497,7 +483,7 @@ tour.start();`,
     badge: "User Protection",
     description:
       "Intercepts tour exit attempts (via close button or backdrop click) to prompt the user with a confirmation dialog before terminating.",
-    driverJsRef: "https://driverjs.com/docs/confirm-on-exit",
+    targetSelector: "#confirm-exit-target",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -512,7 +498,7 @@ const tour = new WebDrive({
   },
   steps: [
     {
-      element: "#playground-analytics-card",
+      element: "#confirm-exit-target",
       title: "Exit Confirmation Demo",
       description: "Try clicking the 'X' close button or outside backdrop — you will be prompted to confirm exit.",
       position: "bottom",
@@ -528,7 +514,7 @@ tour.start();`,
     }
   },
   steps: [
-    { element: "#playground-analytics-card", title: "Confirm on Exit", position: "bottom" },
+    { element: "#confirm-exit-target", title: "Confirm on Exit", position: "bottom" },
   ],
 });
 tour.start();`,
@@ -540,20 +526,20 @@ tour.start();`,
     badge: "Hands-On",
     description:
       "Requires the user to interact with the target element (typing into an input or toggling an option) before allowing advancement to the next step.",
-    driverJsRef: "https://driverjs.com/docs/interactive-tour",
+    targetSelector: "#interactive-tour-input",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
 const tour = new WebDrive({
   steps: [
     {
-      element: "#playground-interactive-input",
+      element: "#interactive-tour-input",
       title: "Interactive Requirement",
-      description: "Please type 'hello' into this input field to unlock the Next step.",
+      description: "Please type in this input field to unlock the Next step.",
       position: "bottom",
       showNextButton: false, // Hidden until input is valid
       onEnter: () => {
-        const input = document.querySelector("#playground-interactive-input") as HTMLInputElement;
+        const input = document.querySelector("#interactive-tour-input") as HTMLInputElement;
         const handler = () => {
           if (input?.value.trim().length > 0) {
             tour.next();
@@ -564,7 +550,7 @@ const tour = new WebDrive({
       },
     },
     {
-      element: "#playground-primary-btn",
+      element: "#interactive-tour-input",
       title: "Action Completed!",
       description: "Great job! WebDrive seamlessly listens to DOM input events to drive the tour forward.",
       position: "bottom",
@@ -576,53 +562,47 @@ tour.start();`,
     codeJs: `const tour = new WebDrive({
   steps: [
     {
-      element: "#playground-interactive-input",
+      element: "#interactive-tour-input",
       title: "Type Something",
       description: "Type in the box to advance.",
       showNextButton: false,
       onEnter: () => {
-        const input = document.querySelector("#playground-interactive-input");
+        const input = document.querySelector("#interactive-tour-input");
         input?.addEventListener("input", () => tour.next(), { once: true });
       },
     },
-    { element: "#playground-primary-btn", title: "Unlocked!", position: "bottom" },
+    { element: "#interactive-tour-input", title: "Unlocked!", position: "bottom" },
   ],
 });
 tour.start();`,
   },
   {
     id: "tour-progress",
-    title: "Tour Progress (Custom Formatter)",
+    title: "Tour Progress (Step Counter)",
     category: "lifecycle",
     badge: "Ergonomics",
     description:
-      "Display step progression numbers with custom formatting, such as 'Step 2 of 4 • 50% completed'.",
-    driverJsRef: "https://driverjs.com/docs/tour-progress",
+      "Display step progression numbers with custom formatting, such as 'Step 2 of 3'.",
+    targetSelector: "#progress-step-1, #progress-step-2, #progress-step-3",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
 const tour = new WebDrive({
   showProgress: true,
-  // Custom progress string formatter
-  renderProgress: (current, total) => {
-    const percent = Math.round((current / total) * 100);
-    return \`Step \${current} of \${total} (\${percent}%)\`;
-  },
   steps: [
-    { element: "#playground-primary-btn", title: "Custom Progress 1/3", position: "bottom" },
-    { element: "#playground-analytics-card", title: "Custom Progress 2/3", position: "left" },
-    { element: "#playground-search-input", title: "Custom Progress 3/3", position: "bottom" },
+    { element: "#progress-step-1", title: "Progress Step 1", description: "First step in the sequence.", position: "bottom" },
+    { element: "#progress-step-2", title: "Progress Step 2", description: "Notice '2 of 3' indicator in header.", position: "bottom" },
+    { element: "#progress-step-3", title: "Progress Step 3", description: "Final step with finish action.", position: "bottom" },
   ],
 });
 
 tour.start();`,
     codeJs: `const tour = new WebDrive({
   showProgress: true,
-  renderProgress: (current, total) => \`Step \${current} of \${total} (\${Math.round(current / total * 100)}%)\`,
   steps: [
-    { element: "#playground-primary-btn", title: "Step 1", position: "bottom" },
-    { element: "#playground-analytics-card", title: "Step 2", position: "left" },
-    { element: "#playground-search-input", title: "Step 3", position: "bottom" },
+    { element: "#progress-step-1", title: "Step 1", position: "bottom" },
+    { element: "#progress-step-2", title: "Step 2", position: "bottom" },
+    { element: "#progress-step-3", title: "Step 3", position: "bottom" },
   ],
 });
 tour.start();`,
@@ -634,7 +614,7 @@ tour.start();`,
     badge: "State Machine",
     description:
       "Full suite of lifecycle callbacks (onStart, onStepChange, onEnter, onLeave, onComplete, onClose) and strongly-typed event emitter (.on).",
-    driverJsRef: "https://driverjs.com/docs/hooks",
+    targetSelector: "#hooks-step-1, #hooks-step-2",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -645,7 +625,7 @@ const tour = new WebDrive({
   onClose: () => console.log("Tour closed"),
   steps: [
     {
-      element: "#playground-primary-btn",
+      element: "#hooks-step-1",
       title: "Step 1 Lifecycle",
       description: "Inspect the live event log console below to see events firing in real time.",
       position: "bottom",
@@ -653,7 +633,7 @@ const tour = new WebDrive({
       onLeave: () => console.log("Leaving step 1"),
     },
     {
-      element: "#playground-search-input",
+      element: "#hooks-step-2",
       title: "Step 2 Lifecycle",
       description: "Triggering onEnter and stepChange events.",
       position: "bottom",
@@ -668,12 +648,12 @@ tour.on("stepChange", ({ step, index }) => {
 
 tour.start();`,
     codeJs: `const tour = new WebDrive({
-  onStart: () => logEvent("onStart"),
-  onStepChange: (step, i) => logEvent("onStepChange: " + i),
-  onComplete: () => logEvent("onComplete"),
+  onStart: () => console.log("onStart"),
+  onStepChange: (step, i) => console.log("onStepChange: " + i),
+  onComplete: () => console.log("onComplete"),
   steps: [
-    { element: "#playground-primary-btn", title: "Step 1", position: "bottom" },
-    { element: "#playground-search-input", title: "Step 2", position: "bottom" },
+    { element: "#hooks-step-1", title: "Step 1", position: "bottom" },
+    { element: "#hooks-step-2", title: "Step 2", position: "bottom" },
   ],
 });
 tour.start();`,
@@ -685,7 +665,7 @@ tour.start();`,
     badge: "Cross-Route",
     description:
       "Guide users across multiple pages or routes while maintaining tour completion status via persistent storage adapters.",
-    driverJsRef: "https://driverjs.com/docs/multi-page-tour",
+    targetSelector: "#multipage-step-1",
     codeTs: `import { WebDrive } from "webdrive";
 import "webdrive/styles.css";
 
@@ -695,14 +675,11 @@ const tour = new WebDrive({
   remember: true, // Persists completion in localStorage
   steps: [
     {
-      element: "#playground-analytics-card",
-      title: "Multi-Page Step 1",
+      element: "#multipage-step-1",
+      title: "Cross-Route Walkthrough",
       description: "This tour tracks completion in localStorage. Once finished, it won't repeat automatically on reload.",
       position: "bottom",
-      nextButtonText: "Go to Dashboard →",
-      onLeave: () => {
-        // You can programmatically navigate using router.push("/dashboard")
-      },
+      doneButtonText: "Got It",
     },
   ],
 });
@@ -713,7 +690,7 @@ tour.start();`,
   remember: true,
   steps: [
     {
-      element: "#playground-analytics-card",
+      element: "#multipage-step-1",
       title: "Multi-Page Tour",
       description: "Maintains completion in localStorage.",
       position: "bottom",

@@ -40,10 +40,6 @@ export function Navbar() {
           <a href="/#comparison" className="hover:text-foreground transition-colors">
             Comparison
           </a>
-          <Link href="/dashboard" className="text-primary font-semibold hover:underline flex items-center gap-1">
-            Live App Demo
-            <ExternalLink className="h-3 w-3" />
-          </Link>
         </nav>
 
         {/* Actions */}

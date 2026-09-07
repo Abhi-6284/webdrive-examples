@@ -37,7 +37,7 @@ export default function ExamplesPage() {
             </h1>
 
             <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Test live walkthrough behaviors against the sandbox playground below, inspect real-time lifecycle event logs, and copy drop-in TypeScript & JavaScript code.
+              Explore 16 self-contained walkthrough recipes. Each example features its own dedicated interactive target sandbox, live demo runner, and copyable TypeScript & JavaScript implementation.
             </p>
           </div>
         </div>
