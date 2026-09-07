@@ -43,6 +43,10 @@ export function Footer() {
             <span>GitHub</span>
           </a>
 
+          <Link href="/playground" className="hover:text-foreground transition-colors font-medium">
+            Playground
+          </Link>
+
           <Link href="/examples" className="hover:text-foreground transition-colors font-medium">
             Examples (16+)
           </Link>
