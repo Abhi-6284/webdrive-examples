@@ -2,10 +2,12 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { MetricsGrid } from "@/components/dashboard/MetricsGrid";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
+import { MultiPageTourResume } from "@/components/tour/MultiPageTourResume";
 
 export default function DashboardPage() {
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
+      <MultiPageTourResume />
       {/* Sidebar */}
       <Sidebar />
 

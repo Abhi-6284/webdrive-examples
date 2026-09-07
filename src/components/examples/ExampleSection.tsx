@@ -462,22 +462,27 @@ export function ExampleSection({
         return (
           <div
             id="multipage-step-1"
-            className="rounded-xl border border-border bg-card p-4 flex items-center justify-between gap-3"
+            className="rounded-xl border border-border bg-card p-4 flex flex-col gap-3"
           >
-            <div>
-              <span className="text-xs font-bold text-foreground block">
-                Cross-Route Persistence
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-foreground">
+                Page 1: Multi-Page Source Target
               </span>
-              <span className="text-[11px] text-muted-foreground">
-                Saves completion state to localStorage to prevent repeating on refresh.
-              </span>
+              <Badge variant="outline" className="text-[10px] text-primary border-primary/30">
+                Route: /examples
+              </Badge>
             </div>
-            <a href="/dashboard">
-              <Button size="sm" variant="outline" className="h-8 text-xs gap-1">
-                <span>View Dashboard</span>
-                <ArrowRight className="h-3 w-3" />
-              </Button>
-            </a>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Click <strong>&quot;Run Live Demo&quot;</strong> above. WebDrive will spotlight this card, then transition you automatically to <code>/dashboard</code> to resume Step 2!
+            </p>
+            <div className="flex items-center gap-2 pt-1">
+              <a href="/dashboard">
+                <Button size="sm" variant="outline" className="h-8 text-xs gap-1">
+                  <span>Visit Dashboard Directly</span>
+                  <ArrowRight className="h-3 w-3" />
+                </Button>
+              </a>
+            </div>
           </div>
         );
 

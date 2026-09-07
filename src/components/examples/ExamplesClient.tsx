@@ -439,23 +439,37 @@ export function ExamplesClient() {
         });
         break;
 
-      case "multi-page-tour":
+      case "multi-page-tour": {
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("webdrive:tour:saas-multipage-onboarding");
+        }
+
         tour = new WebDrive({
           id: "saas-multipage-onboarding",
-          remember: true,
-          onComplete: () => handleEnd("completed"),
+          remember: false,
+          showProgress: true,
+          animate: true,
           onClose: () => handleEnd("closed"),
+          onComplete: () => {
+            handleEnd("completed");
+            if (typeof window !== "undefined") {
+              localStorage.setItem("webdrive_multipage_active", "true");
+              window.location.href = "/dashboard?tour=multipage";
+            }
+          },
           steps: [
             {
               element: "#multipage-step-1",
-              title: "Cross-Route Walkthrough",
-              description: "This tour persists its state in localStorage. Once finished, it won't repeat automatically.",
+              title: "🚀 Multi-Page Tour (Page 1 of 2)",
+              description:
+                "WebDrive preserves walkthrough state across page transitions! Click 'Continue to Dashboard →' to navigate across routes and automatically resume Step 2.",
               position: "bottom",
-              doneButtonText: "Got It",
+              doneButtonText: "Continue to Dashboard →",
             },
           ],
         });
         break;
+      }
 
       default:
         tour = new WebDrive({
