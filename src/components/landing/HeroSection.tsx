@@ -55,7 +55,7 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
       {/* Ambient background glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-primary/15 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-primary/15 blur-[130px] rounded-full pointer-events-none animate-glow-breathe" />
 
       <div className="container mx-auto px-4 max-w-5xl text-center relative z-10">
         {/* Version Badge, Live Downloads & AI Ready */}

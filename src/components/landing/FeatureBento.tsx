@@ -59,7 +59,7 @@ export function FeatureBento() {
           {features.map((f) => {
             const Icon = f.icon;
             return (
-              <Card key={f.title} className="transition-all hover:shadow-md hover:border-primary/40">
+              <Card key={f.title} className="transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:border-primary/50">
                 <CardHeader>
                   <div className="rounded-lg bg-primary/10 p-2.5 text-primary w-fit mb-2">
                     <Icon className="h-5 w-5" />

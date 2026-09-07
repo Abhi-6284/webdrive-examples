@@ -20,7 +20,7 @@ export default function ExamplesPage() {
       <main className="flex-1 pb-16">
         {/* Page Hero Header */}
         <div className="relative overflow-hidden border-b border-border/60 bg-muted/20 py-12 md:py-16">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[250px] bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[250px] bg-primary/10 blur-[120px] rounded-full pointer-events-none animate-glow-breathe" />
 
           <div className="container mx-auto px-4 max-w-6xl relative z-10 text-center">
             <div className="inline-flex flex-wrap items-center justify-center gap-2.5 mb-4">

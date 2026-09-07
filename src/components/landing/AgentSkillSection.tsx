@@ -8,7 +8,7 @@ export function AgentSkillSection() {
   return (
     <section className="py-20 border-t bg-gradient-to-b from-primary/5 via-transparent to-transparent">
       <div className="container mx-auto px-4 max-w-4xl">
-        <Card className="border-primary/30 shadow-xl relative overflow-hidden bg-card/90 backdrop-blur">
+        <Card className="border-primary/30 shadow-xl hover:shadow-2xl hover:border-primary/50 transition-all duration-300 relative overflow-hidden bg-card/90 backdrop-blur">
           <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
             <Bot className="h-44 w-44 text-primary" />
           </div>

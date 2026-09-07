@@ -85,13 +85,69 @@
   --webdrive-overlay: rgba(0, 0, 0, 0.75);
 }
 
+/* Global Smooth Navigation & Typography */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  :focus-visible {
+    outline: none;
+    transition: box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  }
+}
+
+/* Sleek Micro-Scrollbars for Fluid Desktop & Trackpad Scrolling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.2);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.45);
+}
+
+/* WebDrive Tour Fluid Micro-Interactions & Bezier Physics */
+.webdrive-overlay {
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.webdrive-overlay path {
+  transition: d 0.35s cubic-bezier(0.16, 1, 0.3, 1), fill-opacity 0.25s ease-out !important;
+}
+
+.webdrive-popover {
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, opacity;
+  box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.22), 0 8px 16px -6px rgba(0, 0, 0, 0.12) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.webdrive-btn {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.webdrive-btn:active {
+  transform: scale(0.96) !important;
 }
 
 /* WebDrive: Hide popover completely when a step has no title, description, or buttons (Simple Highlight) */
@@ -102,4 +158,35 @@
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
+}
+
+/* Ambient Background Breathing Animation */
+@keyframes glow-breathe {
+  0%, 100% {
+    opacity: 0.14;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.24;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+.animate-glow-breathe {
+  animation: glow-breathe 7s ease-in-out infinite;
+}
+
+/* Accessible Reduced-Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

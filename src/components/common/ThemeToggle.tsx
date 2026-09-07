@@ -50,9 +50,9 @@ export function ThemeToggle({
       title={`Current: ${isDark ? "Dark" : "Light"}${isSystem ? " (System)" : ""} • Right-click to follow OS`}
     >
       {isDark ? (
-        <Sun className="h-4 w-4 text-amber-400 transition-transform duration-200 rotate-0" />
+        <Sun className="h-4 w-4 text-amber-400 transition-all duration-300 rotate-0 hover:rotate-45" />
       ) : (
-        <Moon className="h-4 w-4 text-slate-700 transition-transform duration-200 rotate-0" />
+        <Moon className="h-4 w-4 text-slate-700 transition-all duration-300 rotate-0 hover:-rotate-12" />
       )}
       {showLabel && (
         <span className="ml-1.5 text-xs font-medium">
