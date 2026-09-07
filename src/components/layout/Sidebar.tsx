@@ -1,5 +1,6 @@
 import React from "react";
 import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
+import { NpmDownloadsBadge } from "@/components/common/NpmDownloadsBadge";
 import {
   LayoutDashboard,
   BarChart3,
@@ -64,9 +65,12 @@ export function Sidebar() {
       </nav>
 
       {/* Footer Info */}
-      <div className="rounded-lg border border-border/60 bg-background/50 p-3 text-xs text-muted-foreground">
-        <p className="font-medium text-foreground">WebDrive Showcase</p>
-        <p className="text-[11px]">Framework-Agnostic UI Tours</p>
+      <div className="rounded-lg border border-border/60 bg-background/50 p-3 text-xs text-muted-foreground flex flex-col gap-1.5">
+        <div className="flex items-center justify-between">
+          <p className="font-medium text-foreground">WebDrive Demo</p>
+          <WebDriveVersionBadge variant="tag" />
+        </div>
+        <NpmDownloadsBadge variant="footer" />
       </div>
     </aside>
   );

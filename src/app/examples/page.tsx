@@ -3,6 +3,7 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { ExamplesClient } from "@/components/examples/ExamplesClient";
 import { Badge } from "@/components/ui/badge";
+import { NpmDownloadsBadge } from "@/components/common/NpmDownloadsBadge";
 import { Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default function ExamplesPage() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[250px] bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
 
           <div className="container mx-auto px-4 max-w-6xl relative z-10 text-center">
-            <div className="inline-flex items-center gap-2 mb-4">
+            <div className="inline-flex flex-wrap items-center justify-center gap-2.5 mb-4">
               <Badge
                 variant="outline"
                 className="px-3 py-1 text-xs font-medium gap-1.5 border-primary/30 bg-primary/5 text-primary backdrop-blur"
@@ -30,6 +31,8 @@ export default function ExamplesPage() {
                 <Sparkles className="h-3.5 w-3.5 text-primary" />
                 <span>16 Interactive Tour Recipes</span>
               </Badge>
+
+              <NpmDownloadsBadge variant="pill" />
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">

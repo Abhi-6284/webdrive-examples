@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { NpmDownloadsBadge } from "@/components/common/NpmDownloadsBadge";
 import { Github, ExternalLink } from "lucide-react";
 
 export function Footer() {
@@ -20,14 +21,15 @@ export function Footer() {
         </div>
 
         {/* Links */}
-        <div className="flex items-center gap-6 text-xs font-medium">
+        <div className="flex flex-wrap items-center justify-center sm:justify-end gap-6 text-xs font-medium">
           <a
             href="https://www.npmjs.com/package/webdrive"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-foreground transition-colors flex items-center gap-1"
+            className="hover:text-foreground transition-colors flex items-center gap-1.5"
           >
             <span>NPM Package</span>
+            <NpmDownloadsBadge variant="footer" showLink={false} />
             <ExternalLink className="h-3 w-3" />
           </a>
 

@@ -3,11 +3,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
 import { LiveVisitorsBadge } from "@/components/common/LiveVisitorsBadge";
+import { NpmDownloadsBadge } from "@/components/common/NpmDownloadsBadge";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
-import { Github, ExternalLink } from "lucide-react";
+import { Github } from "lucide-react";
 
 export function Navbar() {
-
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-md transition-colors">
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
@@ -46,16 +46,8 @@ export function Navbar() {
         <div className="flex items-center gap-2.5">
           <LiveVisitorsBadge variant="pill" className="hidden lg:inline-flex" />
 
-          <a
-            href="https://www.npmjs.com/package/webdrive"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden sm:inline-flex"
-          >
-            <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs font-mono">
-              <WebDriveVersionBadge variant="npm" />
-            </Button>
-          </a>
+          {/* Flex NPM Downloads Badge */}
+          <NpmDownloadsBadge variant="navbar" className="hidden sm:inline-flex" />
 
           <a
             href="https://github.com/Abhi-6284/webdrive"

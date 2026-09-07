@@ -7,8 +7,8 @@ import { ThemeCustomizer } from "./ThemeCustomizer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
-import { LiveVisitorsBadge } from "@/components/common/LiveVisitorsBadge";
-import { Play, Copy, Check, ArrowRight, Sparkles, ShieldCheck, Zap, Compass } from "lucide-react";
+import { NpmDownloadsBadge } from "@/components/common/NpmDownloadsBadge";
+import { Play, Copy, Check, ArrowRight, Sparkles, Compass } from "lucide-react";
 
 export function HeroSection() {
   const [copied, setCopied] = useState(false);
@@ -58,7 +58,7 @@ export function HeroSection() {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-primary/15 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 max-w-5xl text-center relative z-10">
-        {/* Version Badge & Real-Time Visitor Counter */}
+        {/* Version Badge, Live Downloads & AI Ready */}
         <div className="mb-6 flex flex-wrap items-center justify-center gap-2.5">
           <Badge
             variant="outline"
@@ -69,6 +69,9 @@ export function HeroSection() {
             <span className="text-muted-foreground">•</span>
             <span className="text-primary font-semibold">AI Agent Skill Included</span>
           </Badge>
+
+          {/* Prominent NPM Downloads Pill */}
+          <NpmDownloadsBadge variant="pill" />
         </div>
 
         {/* Main Title */}
@@ -137,6 +140,9 @@ export function HeroSection() {
               )}
             </span>
           </div>
+
+          {/* Social Proof Flex Bar */}
+          <NpmDownloadsBadge variant="hero-proof" className="mt-1" />
 
           {/* Theme customizer widget */}
           <div className="mt-2">
