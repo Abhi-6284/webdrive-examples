@@ -37,6 +37,24 @@ export default function RootLayout({
                 } catch (e) {}
               })();
 
+              // Automatically unregister rogue localhost service workers from other projects that poison chunk caches
+              if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+                try {
+                  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    for (var r of registrations) {
+                      r.unregister();
+                    }
+                  });
+                  if ('caches' in window) {
+                    caches.keys().then(function(names) {
+                      for (var name of names) {
+                        caches.delete(name);
+                      }
+                    });
+                  }
+                } catch (e) {}
+              }
+
               // Intercept and silence third-party browser extension errors (e.g. MetaMask / Wallet extensions)
               if (typeof window !== 'undefined') {
                 window.addEventListener('unhandledrejection', function(event) {

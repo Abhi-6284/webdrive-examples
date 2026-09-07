@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { WebDrive } from "webdrive";
-import "webdrive/styles.css";
 import { EXAMPLES_DATA, ExampleItem, ExampleCategory } from "@/lib/examples-data";
 import { InteractivePlayground } from "./InteractivePlayground";
 import { ExampleCard } from "./ExampleCard";
