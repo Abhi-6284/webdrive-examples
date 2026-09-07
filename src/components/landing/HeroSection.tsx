@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { WebDriveVersionBadge } from "@/components/common/WebDriveVersionBadge";
 import { LiveVisitorsBadge } from "@/components/common/LiveVisitorsBadge";
-import { Play, Copy, Check, ArrowRight, Sparkles, ShieldCheck, Zap } from "lucide-react";
+import { Play, Copy, Check, ArrowRight, Sparkles, ShieldCheck, Zap, Compass } from "lucide-react";
 
 export function HeroSection() {
   const [copied, setCopied] = useState(false);
@@ -82,7 +82,7 @@ export function HeroSection() {
         </p>
 
         {/* Primary Action Buttons */}
-        <div id="hero-cta-buttons" className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+        <div id="hero-cta-buttons" className="mt-8 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3.5">
           <Button
             size="lg"
             onClick={() => start(0)}
@@ -92,6 +92,18 @@ export function HeroSection() {
             <Play className="h-4 w-4 fill-current" />
             <span>{isActive ? "Tour is Running..." : "Take the 10-Second Tour"}</span>
           </Button>
+
+          <Link href="/examples">
+            <Button
+              id="hero-examples-cta"
+              size="lg"
+              variant="secondary"
+              className="h-12 px-6 gap-2 text-base font-semibold shadow-sm hover:bg-secondary/80 border border-border/50"
+            >
+              <Compass className="h-4 w-4 text-primary" />
+              <span>Explore 16+ Examples</span>
+            </Button>
+          </Link>
 
           <Link href="/dashboard">
             <Button

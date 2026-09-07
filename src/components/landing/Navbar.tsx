@@ -24,16 +24,20 @@ export function Navbar() {
 
         {/* Navigation Anchors */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
-          <a href="#features" className="hover:text-foreground transition-colors">
+          <Link href="/examples" className="text-foreground hover:text-primary font-semibold transition-colors flex items-center gap-1.5">
+            <span>Examples</span>
+            <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">16+</span>
+          </Link>
+          <a href="/#features" className="hover:text-foreground transition-colors">
             Features
           </a>
-          <a href="#playground" className="hover:text-foreground transition-colors">
+          <a href="/#playground" className="hover:text-foreground transition-colors">
             Playground
           </a>
-          <a href="#theming" className="hover:text-foreground transition-colors">
+          <a href="/#theming" className="hover:text-foreground transition-colors">
             Theming
           </a>
-          <a href="#comparison" className="hover:text-foreground transition-colors">
+          <a href="/#comparison" className="hover:text-foreground transition-colors">
             Comparison
           </a>
           <Link href="/dashboard" className="text-primary font-semibold hover:underline flex items-center gap-1">
